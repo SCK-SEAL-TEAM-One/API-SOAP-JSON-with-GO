@@ -5,7 +5,7 @@ type CountryCodeInfo struct {
 }
 
 type HolidayInfo struct {
-	Holiday []Holiday `json:"holidays"`
+	Holidays []Holiday `json:"holidays"`
 }
 
 type Holiday struct {

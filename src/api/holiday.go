@@ -2,12 +2,15 @@ package api
 
 import (
 	"encoding/json"
-	"flow"
 	"model"
 	"net/http"
 )
 
-func HolidayHandler(writer http.ResponseWriter, request *http.Request) {
+type Api struct {
+	Flow func(model.CountryCodeInfo) model.HolidayInfo
+}
+
+func (api Api) HolidayHandler(writer http.ResponseWriter, request *http.Request) {
 	var countryCodeInfo model.CountryCodeInfo
 	err := json.NewDecoder(request.Body).Decode(&countryCodeInfo)
 	if err != nil {
@@ -15,7 +18,7 @@ func HolidayHandler(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	holidays := flow.GetHoliday(countryCodeInfo)
+	holidays := api.Flow(countryCodeInfo)
 
 	err = json.NewEncoder(writer).Encode(holidays)
 	if err != nil {

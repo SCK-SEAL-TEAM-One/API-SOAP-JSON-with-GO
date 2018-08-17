@@ -4,6 +4,14 @@ import (
 	"encoding/xml"
 )
 
+type HolidayInfo struct {
+	Holiday []Holiday `json:"holidays"`
+}
+
+type Holiday struct {
+	Code        string `json:"code"`
+	Description string `json:"description"`
+}
 type HolidayAvailableMessage struct {
 	XMLName     xml.Name `xml:"soapenv:Envelope"`
 	CountryCode string   `xml:"soapenv:Body>hs:GetHolidaysAvailable>hs:countryCode"`

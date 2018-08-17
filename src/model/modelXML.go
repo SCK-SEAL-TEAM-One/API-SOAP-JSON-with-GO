@@ -2,7 +2,6 @@ package model
 
 import (
 	"encoding/xml"
-	"fmt"
 )
 
 type HolidaysAvailableResult struct {
@@ -22,7 +21,6 @@ func (har HolidaysAvailableResult) ToJSON() HolidayInfo {
 			Code:        har.HolidayCode[index].Code,
 			Description: har.HolidayCode[index].Description,
 		}
-		fmt.Println(holiday[index])
 	}
 	return HolidayInfo{
 		Holidays: holiday,

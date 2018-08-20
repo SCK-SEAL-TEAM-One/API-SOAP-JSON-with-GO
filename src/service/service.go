@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
 	"model"
 	"net/http"
@@ -14,13 +13,8 @@ import (
 const timeoutDuration = 30 * time.Second
 const holidayWebServiceURL = "http://www.holidaywebservice.com/HolidayService_v2/HolidayService2.asmx?wsdl"
 
-func GetHoliday(countryCodeInfo model.CountryCodeInfo) model.HolidayInfo {
-	var holidayInfo model.HolidayInfo
-
-	return holidayInfo
-}
-
-func SendToHolidayWebService(message model.HolidayAvailableMessage) (model.HolidayInfo, error) {
+func SendToHolidayWebService(countryCodeInfo model.CountryCodeInfo) (model.HolidayInfo, error) {
+	message := countryCodeInfo.ToHolidayAvailableMessage()
 	ctx, _ := context.WithTimeout(context.Background(), timeoutDuration)
 	XML, err := xml.Marshal(message)
 	if err != nil {
@@ -36,7 +30,6 @@ func SendToHolidayWebService(message model.HolidayAvailableMessage) (model.Holid
 	var holidaysAvailableResult model.HolidaysAvailableResult
 
 	data, _ := ioutil.ReadAll(response.Body)
-	fmt.Printf("%s", data)
 	xml.Unmarshal(data, &holidaysAvailableResult)
 
 	return holidaysAvailableResult.ToHolidayInfo(), nil

@@ -21,13 +21,14 @@ func Test_XMLToJSON_Should_Be_JSON(t *testing.T) {
 	}
 }
 
-func Test_JsonToXML_Should_Be_XML(t *testing.T) {
+func Test_ToHolidayAvailableMessage_Should_Be_XML(t *testing.T) {
 	expectedXML, _ := ioutil.ReadFile("./holidayCanada.xml")
 	jsonData := []byte(`{"countryCode":"Canada"}`)
 	var request model.CountryCodeInfo
 	json.Unmarshal(jsonData, &request)
 
-	actualXML := request.JsonToXML()
+	actualHolidayAvailableMessage := request.ToHolidayAvailableMessage()
+	actualXML, _ := xml.MarshalIndent(actualHolidayAvailableMessage, "", "\t")
 	if string(expectedXML) != string(actualXML) {
 		t.Errorf("Expect \n'%s' but got it \n'%s'", expectedXML, actualXML)
 	}

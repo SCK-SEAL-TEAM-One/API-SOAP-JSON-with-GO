@@ -5,9 +5,14 @@ import (
 	"holiday/log"
 	"holiday/route"
 	"holiday/service"
+	"os"
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
 	logger := log.LoggerMongo{}
 	holidayService := service.HolidayService{
 		Logger: &logger,
@@ -16,6 +21,6 @@ func main() {
 		HolidayService: holidayService,
 	}
 	route := route.NewRoute(api)
-	route.Run(":3000")
+	route.Run(":" + port)
 
 }

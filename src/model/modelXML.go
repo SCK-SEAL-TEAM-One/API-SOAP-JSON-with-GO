@@ -14,7 +14,7 @@ type HolidayCode struct {
 	Description string `xml:"Description"`
 }
 
-func (har HolidaysAvailableResult) ToJSON() HolidayInfo {
+func (har HolidaysAvailableResult) ToHolidayInfo() HolidayInfo {
 	holiday := make([]Holiday, len(har.HolidayCode))
 	for index := range har.HolidayCode {
 		holiday[index] = Holiday{

@@ -7,6 +7,9 @@ import (
 	"holiday/route"
 	"holiday/service"
 
+	"os"
+	"time"
+
 	mgo "gopkg.in/mgo.v2"
 )
 
@@ -21,13 +24,28 @@ func main() {
 	logger := log.LoggerMongo{
 		Session: DBConnection,
 	}
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	timeoutSecond, err := time.ParseDuration(os.Getenv("TIMEOUT"))
+	if err != nil {
+		timeoutSecond = 30
+	}
+	timeoutDuration := timeoutSecond * time.Second
+	holidayWebServiceURL := os.Getenv("HOLIDAY_WEBSERVICE_URL")
+	if holidayWebServiceURL == "" {
+		holidayWebServiceURL = "http://www.holidaywebservice.com/HolidayService_v2/HolidayService2.asmx?wsdl"
+	}
 	holidayService := service.HolidayService{
-		Logger: &logger,
+		Logger:               &logger,
+		TimeoutDuration:      timeoutDuration,
+		HolidayWebServiceURL: holidayWebServiceURL,
 	}
 	api := api.Api{
 		HolidayService: holidayService,
 	}
 	route := route.NewRoute(api)
-	route.Run(":3000")
+	route.Run(":" + port)
 
 }

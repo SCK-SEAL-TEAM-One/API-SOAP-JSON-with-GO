@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	. "holiday/api"
-	"holiday/log"
 	"holiday/model"
 	"holiday/route"
 	"holiday/service"
@@ -15,6 +14,21 @@ import (
 )
 
 type mockHolidayService struct {
+}
+
+type mockLogger struct {
+	ErrorCount int
+	Success    int
+}
+
+func (mocklog *mockLogger) Error(s string) bool {
+	mocklog.ErrorCount++
+	return true
+}
+
+func (mocklog *mockLogger) Info(s string) bool {
+	mocklog.Success++
+	return true
 }
 
 func (mhs mockHolidayService) SendToHolidayWebService(countryCodeInfo model.CountryCodeInfo) (model.HolidayInfo, error) {
@@ -51,7 +65,7 @@ func Test_HolidayHandler_Input_CountryCode_GreatBritain_Should_Be_JSON(t *testin
 	request.Header.Set("Content-Type", "application/json")
 	writer := httptest.NewRecorder()
 	holiday := service.HolidayService{
-		Logger:               log.LoggerMongo{},
+		Logger:               &mockLogger{},
 		TimeoutDuration:      30 * time.Second,
 		HolidayWebServiceURL: "http://www.holidaywebservice.com/HolidayService_v2/HolidayService2.asmx?wsdl",
 	}

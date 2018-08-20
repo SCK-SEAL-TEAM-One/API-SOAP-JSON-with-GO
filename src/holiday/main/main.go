@@ -2,19 +2,24 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"holiday/api"
 	"holiday/log"
 	"holiday/route"
 	"holiday/service"
 	"io/ioutil"
+
 	"os"
 	"time"
+
+	mgo "gopkg.in/mgo.v2"
 )
 
 type Config struct {
 	HolidayWebServiceURL string        `json:"holidayWebServiceURL"`
 	TimeoutDuration      time.Duration `json:"timeoutDuration"`
 	Port                 string        `json:"port"`
+	MongoURL             string        `json:"mongoURL"`
 }
 
 func main() {
@@ -22,6 +27,7 @@ func main() {
 	if environment == "" {
 		environment = "development"
 	}
+
 	file, _ := ioutil.ReadFile("./configs/" + environment + ".json")
 	var config Config
 	json.Unmarshal(file, &config)
@@ -38,7 +44,21 @@ func main() {
 		config.HolidayWebServiceURL = os.Getenv("HOLIDAY_WEBSERVICE_URL")
 	}
 
-	logger := log.LoggerMongo{}
+	if os.Getenv("MONGO_URL") != "" {
+		config.MongoURL = os.Getenv("MONGO_URL")
+	}
+
+	DBConnection, err := mgo.Dial(config.MongoURL)
+
+	if err != nil {
+		fmt.Println("Cannot connect database ", err.Error())
+		return
+	}
+
+	logger := log.LoggerMongo{
+		Session: DBConnection,
+	}
+
 	holidayService := service.HolidayService{
 		Logger:               &logger,
 		TimeoutDuration:      config.TimeoutDuration,
@@ -48,6 +68,6 @@ func main() {
 		HolidayService: holidayService,
 	}
 	route := route.NewRoute(api)
-	route.Run(":" + port)
+	route.Run(":" + config.Port)
 
 }

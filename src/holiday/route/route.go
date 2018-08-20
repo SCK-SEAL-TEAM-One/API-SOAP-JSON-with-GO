@@ -1,7 +1,7 @@
 package route
 
 import (
-	apiLibrary "api"
+	apiLibrary "holiday/api"
 
 	"github.com/gin-gonic/gin"
 )

@@ -6,6 +6,7 @@ import (
 	"holiday/route"
 	"holiday/service"
 	"os"
+	"time"
 )
 
 func main() {
@@ -15,7 +16,8 @@ func main() {
 	}
 	logger := log.LoggerMongo{}
 	holidayService := service.HolidayService{
-		Logger: &logger,
+		Logger:          &logger,
+		TimeoutDuration: 30 * time.Second,
 	}
 	api := api.Api{
 		HolidayService: holidayService,

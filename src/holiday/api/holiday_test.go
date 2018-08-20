@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
 type mockHolidayService struct {
@@ -50,7 +51,8 @@ func Test_HolidayHandler_Input_CountryCode_GreatBritain_Should_Be_JSON(t *testin
 	request.Header.Set("Content-Type", "application/json")
 	writer := httptest.NewRecorder()
 	holiday := service.HolidayService{
-		Logger: log.LoggerMongo{},
+		Logger:          log.LoggerMongo{},
+		TimeoutDuration: 30 * time.Second,
 	}
 	api := Api{
 		HolidayService: &holiday,

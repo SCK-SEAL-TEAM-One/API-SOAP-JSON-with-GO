@@ -18,7 +18,7 @@ type Config struct {
 }
 
 func main() {
-	environment := os.Getenv("ENV") //development, production
+	environment := os.Getenv("ENV")
 	if environment == "" {
 		environment = "development"
 	}
@@ -26,26 +26,23 @@ func main() {
 	var config Config
 	json.Unmarshal(file, &config)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = config.Port
+	if os.Getenv("PORT") != "" {
+		config.Port = os.Getenv("PORT")
 	}
+	if os.Getenv("TIMEOUT") != "" {
+		config.TimeoutDuration, _ = time.ParseDuration(os.Getenv("TIMEOUT"))
+	}
+	config.TimeoutDuration = config.TimeoutDuration * time.Second
 
-	timeoutSecond, err := time.ParseDuration(os.Getenv("TIMEOUT"))
-	if err != nil {
-		timeoutSecond = config.TimeoutDuration
-	}
-	timeoutDuration := timeoutSecond * time.Second
-	holidayWebServiceURL := os.Getenv("HOLIDAY_WEBSERVICE_URL")
-	if holidayWebServiceURL == "" {
-		holidayWebServiceURL = config.HolidayWebServiceURL
+	if os.Getenv("HOLIDAY_WEBSERVICE_URL") != "" {
+		config.HolidayWebServiceURL = os.Getenv("HOLIDAY_WEBSERVICE_URL")
 	}
 
 	logger := log.LoggerMongo{}
 	holidayService := service.HolidayService{
 		Logger:               &logger,
-		TimeoutDuration:      timeoutDuration,
-		HolidayWebServiceURL: holidayWebServiceURL,
+		TimeoutDuration:      config.TimeoutDuration,
+		HolidayWebServiceURL: config.HolidayWebServiceURL,
 	}
 	api := api.Api{
 		HolidayService: holidayService,

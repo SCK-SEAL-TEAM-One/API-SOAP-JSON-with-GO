@@ -14,6 +14,9 @@ import (
 const timeoutDuration = 30 * time.Second
 const holidayWebServiceURL = "http://www.holidaywebservice.com/HolidayService_v2/HolidayService2.asmx?wsdl"
 
+type IHolidayService interface {
+	SendToHolidayWebService(countryCodeInfo model.CountryCodeInfo) (model.HolidayInfo, error)
+}
 type HolidayService struct {
 	Logger log.Logger
 }

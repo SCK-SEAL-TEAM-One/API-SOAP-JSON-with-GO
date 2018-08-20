@@ -9,7 +9,7 @@ import (
 )
 
 type Api struct {
-	HolidayService service.HolidayService
+	HolidayService service.IHolidayService
 }
 
 func (api Api) HolidayHandler(c *gin.Context) {

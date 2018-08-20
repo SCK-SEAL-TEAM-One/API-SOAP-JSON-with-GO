@@ -3,3 +3,4 @@ bin
 .DS_Store
 github.com
 golang.org
+gopkg.in

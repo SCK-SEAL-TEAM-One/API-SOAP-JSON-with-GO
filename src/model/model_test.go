@@ -14,7 +14,7 @@ func Test_XMLToJSON_Should_Be_JSON(t *testing.T) {
 	var holidaysAvailableResult model.HolidaysAvailableResult
 
 	xml.Unmarshal(xmlfile, &holidaysAvailableResult)
-	holidayInfo := holidaysAvailableResult.ToJSON()
+	holidayInfo := holidaysAvailableResult.ToHolidayInfo()
 	actual, _ := json.Marshal(holidayInfo)
 	if string(expected) != string(actual) {
 		t.Errorf("expected \n'%s' but got it \n'%s'", expected, actual)

@@ -11,14 +11,13 @@ import (
 	"time"
 )
 
-const holidayWebServiceURL = "http://www.holidaywebservice.com/HolidayService_v2/HolidayService2.asmx?wsdl"
-
 type IHolidayService interface {
 	SendToHolidayWebService(countryCodeInfo model.CountryCodeInfo) (model.HolidayInfo, error)
 }
 type HolidayService struct {
-	TimeoutDuration time.Duration
-	Logger          log.Logger
+	HolidayWebServiceURL string
+	TimeoutDuration      time.Duration
+	Logger               log.Logger
 }
 
 func (hs HolidayService) SendToHolidayWebService(countryCodeInfo model.CountryCodeInfo) (model.HolidayInfo, error) {
@@ -29,7 +28,7 @@ func (hs HolidayService) SendToHolidayWebService(countryCodeInfo model.CountryCo
 		hs.Logger.Error(err.Error())
 		return model.HolidayInfo{}, err
 	}
-	request, _ := http.NewRequest("POST", holidayWebServiceURL, bytes.NewBuffer(XML))
+	request, _ := http.NewRequest("POST", hs.HolidayWebServiceURL, bytes.NewBuffer(XML))
 	request.Header.Set("Content-Type", "text/xml")
 	request = request.WithContext(ctx)
 	response, err := http.DefaultClient.Do(request)

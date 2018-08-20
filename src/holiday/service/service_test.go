@@ -14,8 +14,9 @@ func Test_SendToHolidayWebService_Input_Canada_Should_Be_48_Days(t *testing.T) {
 	expected := 48
 	logger := mockLogger{}
 	holidayService := HolidayService{
-		Logger:          &logger,
-		TimeoutDuration: 30 * time.Second,
+		Logger:               &logger,
+		TimeoutDuration:      30 * time.Second,
+		HolidayWebServiceURL: "http://www.holidaywebservice.com/HolidayService_v2/HolidayService2.asmx?wsdl",
 	}
 	actual, _ := holidayService.SendToHolidayWebService(countryCode)
 

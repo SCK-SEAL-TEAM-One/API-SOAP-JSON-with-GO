@@ -1,18 +1,22 @@
 package api_test
 
 import (
-	. "api"
 	"bytes"
 	"encoding/json"
+	. "holiday/api"
+	"holiday/log"
+	"holiday/model"
+	"holiday/route"
+	"holiday/service"
 	"io/ioutil"
-	"model"
 	"net/http/httptest"
-	"route"
-	"service"
 	"testing"
 )
 
-func mockGetHoliday(countryCodeInfo model.CountryCodeInfo) (model.HolidayInfo, error) {
+type mockHolidayService struct {
+}
+
+func (mhs mockHolidayService) SendToHolidayWebService(countryCodeInfo model.CountryCodeInfo) (model.HolidayInfo, error) {
 	var holidayInfo model.HolidayInfo
 	holidays, _ := ioutil.ReadFile("./response.json")
 	json.Unmarshal(holidays, &holidayInfo)
@@ -25,8 +29,9 @@ func Test_MockHolidayHandler_Input_CountryCode_Canada_Should_Be_JSON(t *testing.
 	request := httptest.NewRequest("POST", "/v1/holiday", bytes.NewBuffer(countryCode))
 	request.Header.Set("Content-Type", "application/json")
 	writer := httptest.NewRecorder()
+	mockGetHoliday := mockHolidayService{}
 	api := Api{
-		HolidayService: mockGetHoliday,
+		HolidayService: &mockGetHoliday,
 	}
 	testRoute := route.NewRoute(api)
 	testRoute.ServeHTTP(writer, request)
@@ -44,8 +49,11 @@ func Test_HolidayHandler_Input_CountryCode_GreatBritain_Should_Be_JSON(t *testin
 	request := httptest.NewRequest("POST", "/v1/holiday", bytes.NewBuffer(countryCode))
 	request.Header.Set("Content-Type", "application/json")
 	writer := httptest.NewRecorder()
+	holiday := service.HolidayService{
+		Logger: log.LoggerMongo{},
+	}
 	api := Api{
-		HolidayService: service.SendToHolidayWebService,
+		HolidayService: &holiday,
 	}
 	testRoute := route.NewRoute(api)
 	testRoute.ServeHTTP(writer, request)

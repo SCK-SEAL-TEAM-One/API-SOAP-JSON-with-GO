@@ -1,16 +1,16 @@
 package service_test
 
 type mockLogger struct {
-	Error   int
-	Success int
+	ErrorCount int
+	Success    int
 }
 
-func (mocklog *mockLogger) LogError(s string) bool {
-	mocklog.Error++
+func (mocklog *mockLogger) Error(s string) bool {
+	mocklog.ErrorCount++
 	return true
 }
 
-func (mocklog *mockLogger) LogInfo(s string) bool {
+func (mocklog *mockLogger) Info(s string) bool {
 	mocklog.Success++
 	return true
 }

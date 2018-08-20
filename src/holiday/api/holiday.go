@@ -1,14 +1,15 @@
 package api
 
 import (
-	"model"
+	"holiday/model"
+	"holiday/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Api struct {
-	HolidayService func(model.CountryCodeInfo) (model.HolidayInfo, error)
+	HolidayService service.IHolidayService
 }
 
 func (api Api) HolidayHandler(c *gin.Context) {
@@ -18,7 +19,7 @@ func (api Api) HolidayHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	holidays, err := api.HolidayService(countryCodeInfo)
+	holidays, err := api.HolidayService.SendToHolidayWebService(countryCodeInfo)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return

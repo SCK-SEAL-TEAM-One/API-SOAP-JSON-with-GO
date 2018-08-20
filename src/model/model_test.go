@@ -3,8 +3,8 @@ package model_test
 import (
 	"encoding/json"
 	"encoding/xml"
+	"holiday/model"
 	"io/ioutil"
-	"model"
 	"testing"
 )
 

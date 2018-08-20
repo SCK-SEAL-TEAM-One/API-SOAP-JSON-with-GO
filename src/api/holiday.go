@@ -1,28 +1,25 @@
 package api
 
 import (
-	"encoding/json"
 	"model"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Api struct {
 	Flow func(model.CountryCodeInfo) model.HolidayInfo
 }
 
-func (api Api) HolidayHandler(writer http.ResponseWriter, request *http.Request) {
+func (api Api) HolidayHandler(c *gin.Context) {
 	var countryCodeInfo model.CountryCodeInfo
-	err := json.NewDecoder(request.Body).Decode(&countryCodeInfo)
+	err := c.Bind(&countryCodeInfo)
 	if err != nil {
-		http.Error(writer, err.Error(), http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
 	holidays := api.Flow(countryCodeInfo)
 
-	err = json.NewEncoder(writer).Encode(holidays)
-	if err != nil {
-		http.Error(writer, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	c.JSON(200, holidays)
 }

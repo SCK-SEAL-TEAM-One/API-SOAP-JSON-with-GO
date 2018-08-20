@@ -1,6 +1,11 @@
 package log
 
-import "time"
+import (
+	"fmt"
+	"time"
+
+	mgo "gopkg.in/mgo.v2"
+)
 
 type Logs struct {
 	ID          int
@@ -15,18 +20,32 @@ type Logger interface {
 	Info(string) bool
 }
 type LoggerMongo struct {
-	// DB *mgo.Database
+	Session *mgo.Session
 }
 
-func (l LoggerMongo) Logging(level, s string) bool {
-	// return l.database.Collection("Log").Insert(level, s)
-	return true
-}
+// func (l LoggerMongo) Logging(level, s string) bool {
+// 	// return l.database.Collection("Log").Insert(level, s)
+// 	return true
+// }
 
 func (l LoggerMongo) Error(s string) bool {
-	return l.Logging("Error", s)
+	return l.InsertLogs("Error", s, 403)
 }
 
 func (l LoggerMongo) Info(s string) bool {
-	return l.Logging("Info", s)
+	return l.InsertLogs("Info", s, 200)
+}
+func (l LoggerMongo) InsertLogs(levelLog, description string, status int) bool {
+	fmt.Printf("insert success")
+	logs := Logs{
+		CreatedTime: time.Now(),
+		LevelLog:    levelLog,
+		Description: description,
+		Status:      status,
+	}
+	err := l.Session.DB("holidayservice").C("logs").Insert(&logs)
+	if err != nil {
+		return true
+	}
+	return false
 }

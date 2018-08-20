@@ -1,20 +1,21 @@
 {
 	"info": {
-		"_postman_id": "45cdf7f0-7e85-4065-9a24-56e693f546cd",
+		"_postman_id": "cc9ed72e-1266-4057-b671-3acd8e48d204",
 		"name": "holiday",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "UnitedStates",
+			"name": "GreatBritain",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "c1e6c039-34b8-432b-aa39-b015f2587f16",
+						"id": "0d733cd4-6b3f-4d2c-be4f-be6ca149aca2",
 						"type": "text/javascript",
 						"exec": [
-							"var holidayUSA = [{",
+							"var holidayGreatBritain = [",
+							"            {",
 							"              \"code\": \"NEW-YEARS-DAY-ACTUAL\",",
 							"              \"description\": \"New Year's Day\"",
 							"            },",
@@ -186,17 +187,17 @@
 							"    ",
 							"var holidayData = pm.response.json();",
 							"pm.test(\"Check length holidayData should be 42\", function () {",
-							"    pm.expect(holidayData.length).to.eql(42);",
+							"    pm.expect(holidayData.holidays.length).to.eql(42);",
 							"});",
 							"",
 							"pm.test(\"Holiday code\", function () {",
-							"    for (var index = 0; index<=42;index++){",
-							"    pm.expect(jsonData.holidays[index].code).to.eql(holidayUSA[index].code);",
+							"    for (var index = 0; index<42;index++){",
+							"    pm.expect(holidayData.holidays[index].code).to.eql(holidayGreatBritain[index].code);",
 							"    }",
 							"});",
 							"pm.test(\"Description\", function () {",
-							"    for (var index = 0; index<=42;index++){",
-							"    pm.expect(jsonData.holidays[index].description).to.eql(holidayUSA[index].description);",
+							"    for (var index = 0; index<42;index++){",
+							"    pm.expect(holidayData.holidays[index].description).to.eql(holidayGreatBritain[index].description);",
 							"    }",
 							"});"
 						]
@@ -213,7 +214,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"countryCode\":\"UnitedStates\"\n}"
+					"raw": "{\n\t\"countryCode\":\"GreatBritain\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/v1/holiday",
@@ -231,239 +232,15 @@
 			"response": []
 		},
 		{
-			"name": "Canada",
+			"name": "UnitedStates",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "832aa130-979c-4520-a0cd-3fe340ec33b9",
+						"id": "ffd8c791-ee82-4951-ada6-d4c442e7f1d9",
 						"type": "text/javascript",
 						"exec": [
-							"var holidayCanada =[{",
-							"          \"code\": \"NEW-YEARS-DAY-ACTUAL\",",
-							"          \"description\": \"New Year's Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"NEW-YEARS-DAY-OBSERVED\",",
-							"          \"description\": \"New Year's Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"BURNS-NIGHT\",",
-							"          \"description\": \"Robert Burns Night (Burns Night)\"",
-							"        },",
-							"        {",
-							"          \"code\": \"HOLOCAUST-MEMORIAL\",",
-							"          \"description\": \"Holocaust Memorial Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"EASTER-ACTUAL\",",
-							"          \"description\": \"Easter Sunday\"",
-							"        },",
-							"        {",
-							"          \"code\": \"EASTER-OBSERVED\",",
-							"          \"description\": \"Easter Monday\"",
-							"        },",
-							"        {",
-							"          \"code\": \"GOOD-FRIDAY\",",
-							"          \"description\": \"Good Friday\"",
-							"        },",
-							"        {",
-							"          \"code\": \"MAY-DAY\",",
-							"          \"description\": \"May Day (Early May Bank Holiday)\"",
-							"        },",
-							"        {",
-							"          \"code\": \"SPRING-BANK\",",
-							"          \"description\": \"Spring Bank Holiday\"",
-							"        },",
-							"        {",
-							"          \"code\": \"SUMMER-BANK\",",
-							"          \"description\": \"Summer Bank Holiday\"",
-							"        },",
-							"        {",
-							"          \"code\": \"CHRISTMAS-ACTUAL\",",
-							"          \"description\": \"Christmas\"",
-							"        },",
-							"        {",
-							"          \"code\": \"CHRISTMAS-OBSERVED\",",
-							"          \"description\": \"Christmas\"",
-							"        },",
-							"        {",
-							"          \"code\": \"BOXING-DAY-ACTUAL\",",
-							"          \"description\": \"Boxing Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"BOXING-DAY-OBSERVED\",",
-							"          \"description\": \"Boxing Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"NEW-YEARS-EVE\",",
-							"          \"description\": \"New Year's Eve\"",
-							"        },",
-							"        {",
-							"          \"code\": \"VALENTINES-DAY\",",
-							"          \"description\": \"Valentine's Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"ST-DAVIDS-DAY\",",
-							"          \"description\": \"St. David's Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"COMMONWEALTH-DAY\",",
-							"          \"description\": \"Commonwealth Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"ST-PATRICKS-DAY\",",
-							"          \"description\": \"St. Patrick's Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"SHROVE-TUESDAY\",",
-							"          \"description\": \"Shrove Tuesday (Pancake Day)\"",
-							"        },",
-							"        {",
-							"          \"code\": \"ASH-WEDNESDAY\",",
-							"          \"description\": \"Ash Wednesday\"",
-							"        },",
-							"        {",
-							"          \"code\": \"PALM-SUNDAY\",",
-							"          \"description\": \"Palm Sunday\"",
-							"        },",
-							"        {",
-							"          \"code\": \"MAUNDY-THURSDAY\",",
-							"          \"description\": \"Maundy Thursday\"",
-							"        },",
-							"        {",
-							"          \"code\": \"MOTHERS-DAY\",",
-							"          \"description\": \"Mothering Sunday (Mother's Day)\"",
-							"        },",
-							"        {",
-							"          \"code\": \"BST-START\",",
-							"          \"description\": \"British Summertime (BST) Begins\"",
-							"        },",
-							"        {",
-							"          \"code\": \"BST-END\",",
-							"          \"description\": \"British Summertime (BST) Ends\"",
-							"        },",
-							"        {",
-							"          \"code\": \"APRIL-FOOLS\",",
-							"          \"description\": \"April Fools Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"QUEEN-ELIZABETH-BIRTHDAY\",",
-							"          \"description\": \"Queen Elizabeth's Birthday\"",
-							"        },",
-							"        {",
-							"          \"code\": \"ST-GEORGES-DAY\",",
-							"          \"description\": \"St. George's Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"TROOPING-THE-COLOUR\",",
-							"          \"description\": \"Trooping the Colour\"",
-							"        },",
-							"        {",
-							"          \"code\": \"FATHERS-DAY\",",
-							"          \"description\": \"Father's Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"EMMELINE-PANKHURST-DAY\",",
-							"          \"description\": \"Emmeline Pankhurst Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"ST-SWITHUNS-DAY\",",
-							"          \"description\": \"St. Swithun's Day (aka St. Swithin's)\"",
-							"        },",
-							"        {",
-							"          \"code\": \"HALLOWEEN\",",
-							"          \"description\": \"Halloween\"",
-							"        },",
-							"        {",
-							"          \"code\": \"ALL-SAINTS-DAY\",",
-							"          \"description\": \"All Saints Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"GUY-FAWKES-NIGHT\",",
-							"          \"description\": \"Guy Fawkes Night\"",
-							"        },",
-							"        {",
-							"          \"code\": \"REMEMBERANCE-DAY\",",
-							"          \"description\": \"Remembrance Day (Remembrance Sunday)\"",
-							"        },",
-							"        {",
-							"          \"code\": \"ST-ANDREWS-DAY\",",
-							"          \"description\": \"St. Andrew's Day\"",
-							"        },",
-							"        {",
-							"          \"code\": \"HOGMANAY\",",
-							"          \"description\": \"Hogmanay\"",
-							"        },",
-							"        {",
-							"          \"code\": \"GOLDEN-JUBILEE-QUEEN-ELIZABETH-II-2012\",",
-							"          \"description\": \"Golden Jubilee of Queen Elizabeth II\"",
-							"        },",
-							"        {",
-							"          \"code\": \"ROYAL-WEDDING-2011\",",
-							"          \"description\": \"Royal Wedding\"",
-							"        },",
-							"        {",
-							"          \"code\": \"DIAMOND-JUBILEE-QUEEN-ELIZABETH-II-2012\",",
-							"          \"description\": \"Diamond Jubilee of Queen Elizabeth II\"",
-							"        }",
-							"      ]",
-							"var holidayData = pm.response.json();",
-							"pm.test(\"Check length holidayData should be 42\", function () {",
-							"    pm.expect(holidayData.length).to.eql(42);",
-							"});",
-							"",
-							"pm.test(\"Holiday code\", function () {",
-							"    for (var index = 0; index<=42;index++){",
-							"    pm.expect(jsonData.holidays[index].code).to.eql(holidayCanada[index].code);",
-							"    }",
-							"});",
-							"pm.test(\"Description\", function () {",
-							"    for (var index = 0; index<=42;index++){",
-							"    pm.expect(jsonData.holidays[index].description).to.eql(holidayCanada[index].description);",
-							"    }",
-							"});"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"countryCode\":\"Canada\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:3000/v1/holiday",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"v1",
-						"holiday"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GreatBritian",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0d8f66fb-560e-4df2-8637-07807d247250",
-						"type": "text/javascript",
-						"exec": [
-							"var holidayGreatBritian= [",
+							"var holidayUSA = [",
 							"      {",
 							"        \"code\": \"NEW-YEARS-DAY-ACTUAL\",",
 							"        \"description\": \"New Year's Day\"",
@@ -603,17 +380,17 @@
 							"    ]",
 							"var holidayData = pm.response.json();",
 							"pm.test(\"Check length holidayData should be 34\", function () {",
-							"    pm.expect(holidayData.length).to.eql(34);",
+							"    pm.expect(holidayData.holidays.length).to.eql(34);",
 							"});",
 							"",
 							"pm.test(\"Holiday code\", function () {",
-							"    for (var index = 0; index<=34;index++){",
-							"    pm.expect(jsonData.holidays[index].code).to.eql(holidayCanada[index].code);",
+							"    for (var index = 0; index<34;index++){",
+							"    pm.expect(holidayData.holidays[index].code).to.eql(holidayUSA[index].code);",
 							"    }",
 							"});",
 							"pm.test(\"Description\", function () {",
-							"    for (var index = 0; index<=34;index++){",
-							"    pm.expect(jsonData.holidays[index].description).to.eql(holidayCanada[index].description);",
+							"    for (var index = 0; index<34;index++){",
+							"    pm.expect(holidayData.holidays[index].description).to.eql(holidayUSA[index].description);",
 							"    }",
 							"});"
 						]
@@ -630,7 +407,63 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"countryCode\":\"holidayCanada\"\n}"
+					"raw": "{\n\t\"countryCode\":\"UnitedStates\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/v1/holiday",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"v1",
+						"holiday"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Canada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "89948931-388f-43ee-b75f-6d3f504e1a15",
+						"type": "text/javascript",
+						"exec": [
+							"var holidayCanada= [{\"code\":\"NEW-YEARS-DAY-ACTUAL\",\"description\":\"New Year's Day\"},{\"code\":\"NEW-YEARS-DAY-OBSERVED\",\"description\":\"New Year's Day\"},{\"code\":\"DAY-AFTER-NEW-YEARS-DAY\",\"description\":\"Day After New Year's Day (QC)\"},{\"code\":\"EPIPHANY\",\"description\":\"Epiphany\"},{\"code\":\"QUEBEC-FLAG-DAY\",\"description\":\"Quebec Flag Day\"},{\"code\":\"GROUNDHOG-DAY\",\"description\":\"Groundhog Day\"},{\"code\":\"VALENTINES-DAY\",\"description\":\"Valentine's Day\"},{\"code\":\"FLAG-DAY\",\"description\":\"Flag Day\"},{\"code\":\"ISLANDER-DAY\",\"description\":\"Islander Day (PE)\"},{\"code\":\"HERITAGE-DAY-YT\",\"description\":\"Heritage Day (YT)\"},{\"code\":\"LOUIS-RIEL-DAY\",\"description\":\"Louis Riel Day (MB)\"},{\"code\":\"FAMILY-DAY\",\"description\":\"Family Day (AB, ON, SK)\"},{\"code\":\"ST-PATRICKS-DAY-ACTUAL\",\"description\":\"St. Patrick's Day\"},{\"code\":\"ST-PATRICKS-DAY-OBSERVED\",\"description\":\"St. Patrick's Day (NL)\"},{\"code\":\"COMMONWEALTH-DAY\",\"description\":\"Commonwealth Day\"},{\"code\":\"EASTER-ACTUAL\",\"description\":\"Easter Sunday\"},{\"code\":\"EASTER-OBSERVED\",\"description\":\"Easter Monday\"},{\"code\":\"GOOD-FRIDAY\",\"description\":\"Good Friday\"},{\"code\":\"SHROVE-TUESDAY\",\"description\":\"Shrove Tuesday (Pancake Day)\"},{\"code\":\"ASH-WEDNESDAY\",\"description\":\"Ash Wednesday\"},{\"code\":\"PALM-SUNDAY\",\"description\":\"Palm Sunday\"},{\"code\":\"MAUNDY-THURSDAY\",\"description\":\"Maundy Thursday\"},{\"code\":\"VIMY-RIDGE-DAY\",\"description\":\"Vimy Ridge Day\"},{\"code\":\"VICTORIA-DAY\",\"description\":\"Victoria Day\"},{\"code\":\"NATIONAL-PATRIOTES-DAY\",\"description\":\"National Patriotes Day (QC)\"},{\"code\":\"NATIONAL-ABORIGINAL-DAY-ACTUAL\",\"description\":\"National Aboriginal Day (NT)\"},{\"code\":\"NATIONAL-ABORIGINAL-DAY-OBSERVED\",\"description\":\"National Aboriginal Day (NT)\"},{\"code\":\"NATIONAL-DAY-ACTUAL\",\"description\":\"National Day (QC)\"},{\"code\":\"NATIONAL-DAY-OBSERVED\",\"description\":\"National Day (QC)\"},{\"code\":\"CANADA-DAY-ACTUAL\",\"description\":\"Canada Day\"},{\"code\":\"CANADA-DAY-OBSERVED\",\"description\":\"Canada Day\"},{\"code\":\"NUNAVUT-DAY-ACTUAL\",\"description\":\"Nunavut Day\"},{\"code\":\"NUNAVUT-DAY-OBSERVED\",\"description\":\"Nunavut Day\"},{\"code\":\"BRITISH-COLUMBIA-DAY\",\"description\":\"British Columbia Day (BC)\"},{\"code\":\"HERITAGE-DAY-AB\",\"description\":\"Heritage Day (AB)\"},{\"code\":\"CIVIC-HOLIDAY\",\"description\":\"Civic Holiday (MB, NT, ON, SK)\"},{\"code\":\"NEW-BRUNSWICK-DAY\",\"description\":\"New Brunswick Day (NB)\"},{\"code\":\"GOLD-CUP-PARADE-DAY\",\"description\":\"Gold Cup Parade (PE)\"},{\"code\":\"LABOUR-DAY\",\"description\":\"Labour Day\"},{\"code\":\"THANKSGIVING-DAY\",\"description\":\"Thanksgiving Day\"},{\"code\":\"HALLOWEEN\",\"description\":\"Halloween\"},{\"code\":\"REMEMBERANCE-DAY-ACTUAL\",\"description\":\"Rememberance Day\"},{\"code\":\"REMEMBERANCE-DAY-OBSERVED\",\"description\":\"Rememberance Day\"},{\"code\":\"CHRISTMAS-ACTUAL\",\"description\":\"Christmas\"},{\"code\":\"CHRISTMAS-OBSERVED\",\"description\":\"Christmas\"},{\"code\":\"BOXING-DAY-ACTUAL\",\"description\":\"Boxing Day\"},{\"code\":\"BOXING-DAY-OBSERVED\",\"description\":\"Boxing Day\"},{\"code\":\"NEW-YEARS-EVE\",\"description\":\"New Year's Eve\"}]",
+							"var holidayData = pm.response.json();",
+							"pm.test(\"Check length holidayData should be 48\", function () {",
+							"    pm.expect(holidayData.holidays.length).to.eql(48);",
+							"});",
+							"",
+							"pm.test(\"Holiday code\", function () {",
+							"    for (var index = 0; index<48;index++){",
+							"    pm.expect(holidayData.holidays[index].code).to.eql(holidayCanada[index].code);",
+							"    }",
+							"});",
+							"pm.test(\"Description\", function () {",
+							"    for (var index = 0; index<48;index++){",
+							"    pm.expect(holidayData.holidays[index].description).to.eql(holidayCanada[index].description);",
+							"    }",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"countryCode\":\"Canada\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/v1/holiday",

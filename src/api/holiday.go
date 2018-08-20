@@ -8,7 +8,7 @@ import (
 )
 
 type Api struct {
-	Flow func(model.CountryCodeInfo) model.HolidayInfo
+	HolidayService func(model.CountryCodeInfo) (model.HolidayInfo, error)
 }
 
 func (api Api) HolidayHandler(c *gin.Context) {
@@ -18,8 +18,11 @@ func (api Api) HolidayHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-
-	holidays := api.Flow(countryCodeInfo)
+	holidays, err := api.HolidayService(countryCodeInfo)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
 
 	c.JSON(200, holidays)
 }

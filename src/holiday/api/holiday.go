@@ -25,5 +25,5 @@ func (api Api) HolidayHandler(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, holidays)
+	c.JSON(http.StatusOK, holidays)
 }

@@ -23,11 +23,6 @@ type LoggerMongo struct {
 	Session *mgo.Session
 }
 
-// func (l LoggerMongo) Logging(level, s string) bool {
-// 	// return l.database.Collection("Log").Insert(level, s)
-// 	return true
-// }
-
 func (l LoggerMongo) Error(s string) bool {
 	return l.InsertLogs("Error", s, 403)
 }

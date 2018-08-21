@@ -8,11 +8,10 @@ import (
 	"holiday/route"
 	"holiday/service"
 	"io/ioutil"
-
 	"os"
 	"time"
 
-	mgo "gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2"
 )
 
 type Config struct {
@@ -23,45 +22,25 @@ type Config struct {
 }
 
 func main() {
-	environment := os.Getenv("ENV")
-	if environment == "" {
-		environment = "development"
-	}
-
-	file, _ := ioutil.ReadFile("./configs/" + environment + ".json")
-	var config Config
-	json.Unmarshal(file, &config)
-
-	if os.Getenv("PORT") != "" {
-		config.Port = os.Getenv("PORT")
-	}
-	if os.Getenv("TIMEOUT") != "" {
-		config.TimeoutDuration, _ = time.ParseDuration(os.Getenv("TIMEOUT"))
-	}
-	config.TimeoutDuration = config.TimeoutDuration * time.Second
-
-	if os.Getenv("HOLIDAY_WEBSERVICE_URL") != "" {
-		config.HolidayWebServiceURL = os.Getenv("HOLIDAY_WEBSERVICE_URL")
-	}
-
-	if os.Getenv("MONGO_URL") != "" {
-		config.MongoURL = os.Getenv("MONGO_URL")
+	config, err := Configuration()
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
 
 	DBConnection, err := mgo.Dial(config.MongoURL)
-
 	if err != nil {
-		fmt.Println("Cannot connect database ", err.Error())
+		fmt.Printf("Can not connect database")
 		return
 	}
+	defer DBConnection.Close()
 
 	logger := log.LoggerMongo{
 		Session: DBConnection,
 	}
-
 	holidayService := service.HolidayService{
 		Logger:               &logger,
-		TimeoutDuration:      config.TimeoutDuration,
+		TimeoutDuration:      config.TimeoutDuration * time.Second,
 		HolidayWebServiceURL: config.HolidayWebServiceURL,
 	}
 	api := api.Api{
@@ -70,4 +49,34 @@ func main() {
 	route := route.NewRoute(api)
 	route.Run(":" + config.Port)
 
+}
+
+func Configuration() (Config, error) {
+	var config Config
+	environment := os.Getenv("ENV")
+	if environment == "" {
+		environment = "development"
+	}
+	configFile, err := ioutil.ReadFile("./configs/" + environment + ".json")
+	if err != nil {
+		return config, err
+	}
+
+	json.Unmarshal(configFile, &config)
+
+	timeOut := os.Getenv("TIMEOUT")
+	if timeOut != "" {
+		config.TimeoutDuration, _ = time.ParseDuration(timeOut)
+	}
+
+	port := os.Getenv("PORT")
+	if port != "" {
+		config.Port = port
+	}
+
+	holidayWebserviceURL := os.Getenv("HOLIDAY_WEBSERVICE_URL")
+	if holidayWebserviceURL != "" {
+		config.HolidayWebServiceURL = holidayWebserviceURL
+	}
+	return config, nil
 }

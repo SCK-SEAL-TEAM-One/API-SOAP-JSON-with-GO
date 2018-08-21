@@ -12,3 +12,18 @@ docker pull mongo:3.2.20
 ```
  docker container run -p 27017:27017 mongo:3.2.20
 ```
+
+### Step run project 
+- Set GOPATH
+```
+export GOPATH=`pwd`
+```
+- Run Project
+```
+go run src/holiday/main/main.go
+```
+#### !!! ก่อน run project กำหนด environment ก่อน !!!
+```
+ENV={ชื่อ environment}
+ENV=development go run src/holiday/main/main.go
+```

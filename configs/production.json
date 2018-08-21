@@ -1,5 +1,6 @@
 {
     "holidayWebServiceURL" : "http://www.holidaywebservice.com/HolidayService_v2/HolidayService2.asmx?wsdl",
     "timeoutDuration" : 30,
-    "port": "4444"
+    "port": "4444",
+    "mongoURL" : "mongodb://localhost:27017"    
 }

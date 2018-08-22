@@ -20,6 +20,8 @@ func Configuration() (Config, error) {
 
 	if os.Getenv("ENV") == "" {
 		environment = "development"
+	} else {
+		environment = os.Getenv("ENV")
 	}
 
 	configFile, err := ioutil.ReadFile("./configs/" + environment + ".json")

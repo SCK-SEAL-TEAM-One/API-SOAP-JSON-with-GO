@@ -42,6 +42,10 @@ func Configuration() (Config, error) {
 		config.Port = os.Getenv("PORT")
 	}
 
+	if os.Getenv("MONGO_URL") != "" {
+		config.MongoURL = os.Getenv("MONGO_URL")
+	}
+
 	holidayWebserviceURL := os.Getenv("HOLIDAY_WEBSERVICE_URL")
 	if holidayWebserviceURL != "" {
 		config.HolidayWebServiceURL = holidayWebserviceURL

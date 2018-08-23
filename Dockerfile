@@ -4,13 +4,10 @@ FROM golang:1.10.3
 WORKDIR /go
 
 # copy source code 
-COPY src/holiday /go/src/holiday
-COPY configs /go/configs
-COPY atdd /go/atdd
+COPY . /go
 
 # install dependency
-RUN go get -v -d github.com/gin-gonic/gin
-RUN go get -v -d gopkg.in/mgo.v2
+RUN go get -v -d github.com/gin-gonic/gin gopkg.in/mgo.v2
 # go test 
 RUN go test holiday/...
 
